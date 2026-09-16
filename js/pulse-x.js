@@ -7,10 +7,10 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-const W = 1.18;
-const H = 1.76;
-const D = 0.40;
-const R = 0.21;
+const W = 1.42;
+const H = 1.46;
+const D = 0.58;
+const R = 0.26;
 
 const CHAPTERS = [
   { at: 0.00, title: 'This is the Pulse X.', dek: 'Squat purple metal. 3D curved screen. Not a stick — the bar on the Midtown wall tonight.' },
@@ -58,16 +58,14 @@ function canvasTex(w, h, draw) {
 }
 
 function brandTexture() {
-  return canvasTex(256, 1024, (ctx, w, h) => {
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, w, h);
-    ctx.translate(w / 2, h / 2);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillStyle = '#1a1210';
-    ctx.font = '700 72px "Manrope", system-ui, sans-serif';
+  return canvasTex(256, 512, (ctx, w, h) => {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#0d0a0c';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('GEEK BAR', 0, 0);
+    ctx.font = '800 68px "Manrope", system-ui, sans-serif';
+    ctx.fillText('GEEK', w / 2, h * 0.40);
+    ctx.fillText('BAR', w / 2, h * 0.58);
   });
 }
 
@@ -241,11 +239,12 @@ function buildPulseX() {
     envMapIntensity: 1.4
   };
 
-  function add(name, label, object, explode, labelNudge, priority) {
+  function add(name, label, object, explode, labelNudge, priority, explodeRot) {
     object.name = name;
     object.userData.home = object.position.clone();
     object.userData.homeRot = object.rotation.clone();
     object.userData.explode = explode;
+    object.userData.explodeRot = explodeRot || { x: 0, y: 0, z: 0 };
     object.userData.explodeT = 0;
     object.userData.label = label;
     object.userData.labelNudge = labelNudge || { x: 90, y: -20 };
@@ -257,23 +256,23 @@ function buildPulseX() {
 
   // 1 clear tip
   const tip = new THREE.Mesh(
-    new RoundedBoxGeometry(0.22, 0.17, 0.24, 5, 0.075),
+    new RoundedBoxGeometry(0.24, 0.11, 0.22, 4, 0.04),
     mat({
-      color: 0x1a1424,
-      metalness: 0.12,
-      roughness: 0.08,
-      transmission: 0.62,
-      thickness: 0.22,
+      color: 0x161018,
+      metalness: 0.18,
+      roughness: 0.06,
+      transmission: 0.42,
+      thickness: 0.18,
       ior: 1.46,
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.92,
       clearcoat: 1,
-      clearcoatRoughness: 0.06,
-      envMapIntensity: 1.5
+      clearcoatRoughness: 0.05,
+      envMapIntensity: 1.6
     })
   );
-  tip.position.set(-W * 0.28, H / 2 + 0.11, 0);
-  add('clearTip', 'Clear mouthpiece', tip, { x: -0.12, y: 0.72, z: 0.18 }, { x: -120, y: -40 }, 2);
+  tip.position.set(-W * 0.30, H / 2 + 0.09, 0);
+  add('clearTip', 'Clear mouthpiece', tip, { x: -0.08, y: 0.95, z: 0.22 }, { x: -120, y: -40 }, 2);
 
   // 2 tip seal
   const tipSeal = new THREE.Mesh(
@@ -281,16 +280,17 @@ function buildPulseX() {
     mat({ color: 0x2a2430, roughness: 0.7, metalness: 0.05 })
   );
   tipSeal.rotation.x = Math.PI / 2;
-  tipSeal.position.set(-W * 0.28, H / 2 + 0.02, 0);
-  add('tipSeal', 'Tip seal', tipSeal, { x: -0.08, y: 0.52, z: 0.08 }, { x: -130, y: 10 }, 1);
+  tipSeal.position.set(-W * 0.30, H / 2 + 0.01, 0);
+  add('tipSeal', 'Tip seal', tipSeal, { x: -0.06, y: 0.68, z: 0.10 }, { x: -130, y: 10 }, 1);
 
   // 3 top seal
   const topSeal = new THREE.Mesh(
-    new RoundedBoxGeometry(W * 0.72, 0.03, D * 0.7, 2, 0.01),
+    new THREE.TorusGeometry(0.09, 0.012, 8, 20),
     mat({ color: 0x1c1820, roughness: 0.65, metalness: 0.08 })
   );
-  topSeal.position.set(0, H / 2 - 0.02, 0);
-  add('topSeal', 'Upper gasket', topSeal, { x: 0.05, y: 0.42, z: -0.06 }, { x: 110, y: -30 }, 1);
+  topSeal.rotation.x = Math.PI / 2;
+  topSeal.position.set(-W * 0.30, H / 2 - 0.01, 0);
+  add('topSeal', 'Upper gasket', topSeal, { x: 0.02, y: 0.58, z: -0.08 }, { x: 110, y: -30 }, 1);
 
   // 4 airflow grill (4 slits, one mesh)
   const slitGeos = [-0.045, -0.015, 0.015, 0.045].map((dx) => {
@@ -312,8 +312,8 @@ function buildPulseX() {
   const bodyRMat = mat({ ...purple, side: THREE.DoubleSide, clippingPlanes: [clipR], clipShadows: true });
   const bodyL = new THREE.Mesh(bodyGeo, bodyLMat);
   const bodyR = new THREE.Mesh(bodyGeo.clone(), bodyRMat);
-  add('bodyLeft', 'Purple chassis L', bodyL, { x: -0.82, y: 0.04, z: -0.08 }, { x: -140, y: 20 }, 2);
-  add('bodyRight', 'Purple chassis R', bodyR, { x: 0.82, y: 0.04, z: -0.08 }, { x: 140, y: 20 }, 2);
+  add('bodyLeft', 'Purple chassis L', bodyL, { x: -1.45, y: 0.06, z: -0.12 }, { x: -150, y: 10 }, 2, { x: 0.08, y: 0.72, z: 0 });
+  add('bodyRight', 'Purple chassis R', bodyR, { x: 1.45, y: 0.06, z: -0.12 }, { x: 150, y: 10 }, 2, { x: -0.08, y: -0.72, z: 0 });
   clipPlanes.push(
     { mesh: bodyL, local: new THREE.Vector3(-1, 0, 0), plane: clipL },
     { mesh: bodyR, local: new THREE.Vector3(1, 0, 0), plane: clipR }
@@ -321,42 +321,42 @@ function buildPulseX() {
 
   // 7 front shell
   const shellF = new THREE.Mesh(
-    bendFront(new RoundedBoxGeometry(W * 0.98, H * 0.98, 0.045, 7, R * 0.95), 0.055),
+    bendFront(new RoundedBoxGeometry(W * 0.78, H * 0.78, 0.028, 6, 0.14), 0.07),
     mat({ ...blackShell })
   );
-  shellF.position.z = D * 0.42;
-  add('shellFront', 'Front shell', shellF, { x: 0, y: 0.06, z: 0.62 }, { x: 100, y: -80 }, 2);
+  shellF.position.z = D * 0.52;
+  add('shellFront', 'Front shell', shellF, { x: 0, y: 0.10, z: 1.15 }, { x: 110, y: -90 }, 2, { x: -0.25, y: 0, z: 0 });
 
   // 8 back shell
   const shellB = new THREE.Mesh(
-    new RoundedBoxGeometry(W * 0.98, H * 0.98, 0.05, 7, R * 0.95),
-    mat({ ...purple, roughness: 0.28 })
+    new RoundedBoxGeometry(W * 0.96, H * 0.96, 0.042, 6, R * 0.9),
+    mat({ ...purple, roughness: 0.26 })
   );
-  shellB.position.z = -D * 0.44;
-  add('shellBack', 'Rear shell', shellB, { x: 0, y: -0.04, z: -0.70 }, { x: -90, y: 70 }, 2);
+  shellB.position.z = -D * 0.48;
+  add('shellBack', 'Rear shell', shellB, { x: 0, y: -0.08, z: -1.35 }, { x: -100, y: 80 }, 2, { x: 0.28, y: 0, z: 0 });
 
   // 9 screen module
   const module = new THREE.Mesh(
-    bendFront(new THREE.BoxGeometry(W * 0.86, H * 0.86, 0.03, 16, 20, 1), 0.05),
+    bendFront(new THREE.BoxGeometry(W * 0.74, H * 0.74, 0.03, 16, 20, 1), 0.065),
     mat({ color: 0x0b0b12, metalness: 0.3, roughness: 0.35, emissive: 0x101018, emissiveIntensity: 0.4 })
   );
-  module.position.z = D * 0.38;
-  add('screenModule', 'Display module', module, { x: 0.06, y: -0.04, z: 0.92 }, { x: 130, y: 40 }, 2);
+  module.position.z = D * 0.50;
+  add('screenModule', 'Display module', module, { x: 0.08, y: -0.06, z: 1.55 }, { x: 130, y: 40 }, 2);
 
   // 10 curved screen glass
   const screenMap = screenTexture();
   const glassMesh = new THREE.Mesh(
-    bendFront(new RoundedBoxGeometry(W * 0.90, H * 0.90, 0.028, 8, 0.16), 0.062),
+    bendFront(new RoundedBoxGeometry(W * 0.76, H * 0.76, 0.024, 8, 0.14), 0.08),
     mat({
       ...glass,
       map: screenMap,
       emissiveMap: screenMap,
       emissive: 0xf0d070,
-      emissiveIntensity: 0.22
+      emissiveIntensity: 0.72
     })
   );
-  glassMesh.position.z = D * 0.48;
-  add('screenGlass', 'Curved screen glass', glassMesh, { x: 0, y: 0.1, z: 1.18 }, { x: -20, y: -100 }, 2);
+  glassMesh.position.z = D * 0.56;
+  add('screenGlass', 'Curved screen glass', glassMesh, { x: 0, y: 0.16, z: 1.85 }, { x: -20, y: -110 }, 2);
 
   // 11 constellation emissive (stars + links, one mesh) + 12 X mark
   const starPts = [
@@ -367,8 +367,8 @@ function buildPulseX() {
   ];
   const starLinks = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [6, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15], [15, 16]];
   const starGeos = starPts.map(([x, y]) => {
-    const g = new THREE.SphereGeometry(0.016, 10, 10);
-    g.translate(x, y, D * 0.52);
+    const g = new THREE.SphereGeometry(0.013, 10, 10);
+    g.translate(x, y, D * 0.60);
     return g;
   });
   starLinks.forEach(([a, b]) => {
@@ -381,7 +381,7 @@ function buildPulseX() {
     const len = Math.hypot(dx, dy);
     const g = new THREE.CylinderGeometry(0.0032, 0.0032, len, 6);
     g.rotateZ(Math.atan2(dy, dx) - Math.PI / 2);
-    g.translate((ax + bx) / 2, (ay + by) / 2, D * 0.52);
+    g.translate((ax + bx) / 2, (ay + by) / 2, D * 0.60);
     starGeos.push(g);
   });
   const constellation = new THREE.Mesh(
@@ -395,35 +395,37 @@ function buildPulseX() {
       toneMapped: false
     })
   );
-  add('constellation', 'Constellation UI', constellation, { x: 0.18, y: 0.22, z: 1.42 }, { x: 110, y: -70 }, 2);
+  add('constellation', 'Constellation UI', constellation, { x: 0.22, y: 0.28, z: 2.05 }, { x: 110, y: -70 }, 2);
 
   const xMark = new THREE.Mesh(
     (() => {
-      const a = new THREE.BoxGeometry(0.11, 0.016, 0.012);
+      const a = new THREE.BoxGeometry(0.055, 0.009, 0.008);
       a.rotateZ(0.72);
-      const b = new THREE.BoxGeometry(0.11, 0.016, 0.012);
+      const b = new THREE.BoxGeometry(0.055, 0.009, 0.008);
       b.rotateZ(-0.72);
       return mergeGeometries([a, b], false);
     })(),
     mat({ color: 0xf6de88, emissive: 0xf3d56a, emissiveIntensity: 1.8, toneMapped: false })
   );
-  xMark.position.set(0.36, 0.04, D * 0.53);
-  add('xMark', 'Pulse X mark', xMark, { x: 0.42, y: 0.16, z: 1.28 }, { x: 130, y: 0 }, 1);
+  xMark.position.set(0.32, 0.02, D * 0.61);
+  add('xMark', 'Pulse X mark', xMark, { x: 0.48, y: 0.18, z: 1.95 }, { x: 130, y: 0 }, 1);
 
   // 13 brand plate
   const brand = new THREE.Mesh(
-    new RoundedBoxGeometry(0.018, H * 0.62, 0.16, 2, 0.006),
+    new THREE.PlaneGeometry(0.44, 0.78),
     mat({
-      color: 0x1a1214,
-      metalness: 0.4,
-      roughness: 0.35,
+      color: 0xffffff,
+      metalness: 0.15,
+      roughness: 0.4,
       map: brandTexture(),
-      emissive: 0x080608,
-      emissiveIntensity: 0.2
+      transparent: true,
+      side: THREE.DoubleSide,
+      depthWrite: false
     })
   );
-  brand.position.set(-W * 0.50, 0.02, 0);
-  add('brandPlate', 'Brand plate', brand, { x: -1.05, y: 0.12, z: 0.15 }, { x: -150, y: -10 }, 2);
+  brand.rotation.y = -Math.PI / 2;
+  brand.position.set(-W * 0.512, 0.04, 0.02);
+  add('brandPlate', 'Brand plate', brand, { x: -1.55, y: 0.18, z: 0.25 }, { x: -150, y: -10 }, 2);
 
   // 14 inner frame
   const frame = new THREE.Mesh(
@@ -442,12 +444,12 @@ function buildPulseX() {
       map: pcbTexture()
     })
   );
-  pcb.position.set(0.04, -0.08, -0.02);
-  add('pcb', 'Control PCB', pcb, { x: 0.55, y: -0.18, z: 0.12 }, { x: 140, y: 50 }, 2);
+  pcb.position.set(0.06, -0.10, -0.04);
+  add('pcb', 'Control PCB', pcb, { x: 0.95, y: -0.35, z: 0.18 }, { x: 140, y: 50 }, 2);
 
   // 16 battery
   const battery = new THREE.Mesh(
-    new RoundedBoxGeometry(0.42, 0.92, 0.18, 3, 0.05),
+    new RoundedBoxGeometry(0.58, 0.78, 0.24, 3, 0.06),
     mat({
       color: 0x6ec8d4,
       metalness: 0.55,
@@ -457,15 +459,15 @@ function buildPulseX() {
       emissiveIntensity: 0.15
     })
   );
-  battery.position.set(-0.12, -0.12, 0.02);
-  add('battery', 'Cell', battery, { x: -0.48, y: -0.22, z: 0.22 }, { x: -140, y: 60 }, 2);
+  battery.position.set(-0.08, -0.16, 0.02);
+  add('battery', 'Cell', battery, { x: -0.15, y: -0.85, z: 0.55 }, { x: -140, y: 70 }, 2);
 
   const termP = new THREE.Mesh(
     new THREE.CylinderGeometry(0.035, 0.035, 0.02, 16),
     mat({ color: 0xd4a54a, metalness: 0.9, roughness: 0.18 })
   );
-  termP.position.set(-0.12, 0.36, 0.02);
-  add('battTerm', 'Cell terminal', termP, { x: -0.48, y: 0.08, z: 0.22 }, { x: -120, y: 20 }, 1);
+  termP.position.set(-0.08, 0.26, 0.02);
+  add('battTerm', 'Cell terminal', termP, { x: -0.15, y: -0.42, z: 0.55 }, { x: -120, y: 20 }, 1);
 
   // 17 tank
   const tank = new THREE.Mesh(
@@ -483,24 +485,24 @@ function buildPulseX() {
       emissiveIntensity: 0.18
     })
   );
-  tank.position.set(-0.06, 0.42, 0.02);
-  add('tank', 'E-liquid tank', tank, { x: -0.15, y: 0.58, z: 0.35 }, { x: -110, y: -20 }, 2);
+  tank.position.set(-0.10, 0.36, 0.02);
+  add('tank', 'E-liquid tank', tank, { x: 0.55, y: 0.72, z: 0.45 }, { x: -110, y: -20 }, 2);
 
   // 18 chimney
   const chimney = new THREE.Mesh(
     new THREE.CylinderGeometry(0.042, 0.048, 0.55, 18),
     mat({ color: 0xc8c2d4, metalness: 0.75, roughness: 0.22 })
   );
-  chimney.position.set(-0.28, 0.48, 0);
-  add('chimney', 'Chimney', chimney, { x: -0.22, y: 0.78, z: 0.05 }, { x: -130, y: -60 }, 1);
+  chimney.position.set(-0.30, 0.42, 0);
+  add('chimney', 'Chimney', chimney, { x: -0.35, y: 1.05, z: 0.08 }, { x: -130, y: -60 }, 1);
 
   // 19 coil
   const coil = new THREE.Mesh(
     new THREE.TorusGeometry(0.07, 0.018, 10, 28),
     mat({ color: 0xc47a3a, metalness: 0.85, roughness: 0.25, emissive: 0x3a1808, emissiveIntensity: 0.25 })
   );
-  coil.position.set(-0.08, 0.40, 0.02);
-  add('coil', 'Coil', coil, { x: 0.08, y: 0.62, z: 0.48 }, { x: 40, y: -90 }, 2);
+  coil.position.set(-0.10, 0.36, 0.02);
+  add('coil', 'Coil', coil, { x: 0.72, y: 0.55, z: 0.62 }, { x: 40, y: -90 }, 2);
 
   // 20 heating mesh
   const meshHeat = new THREE.Mesh(
@@ -514,8 +516,8 @@ function buildPulseX() {
       emissiveIntensity: 0.2
     })
   );
-  meshHeat.position.set(-0.08, 0.40, 0.02);
-  add('meshHeat', 'Mesh', meshHeat, { x: 0.18, y: 0.55, z: 0.52 }, { x: 90, y: -40 }, 2);
+  meshHeat.position.set(-0.10, 0.36, 0.02);
+  add('meshHeat', 'Mesh', meshHeat, { x: 0.85, y: 0.48, z: 0.68 }, { x: 90, y: -40 }, 2);
 
   // 21 wick
   const wick = new THREE.Mesh(
@@ -523,8 +525,8 @@ function buildPulseX() {
     mat({ color: 0xe8dcc8, roughness: 0.85, metalness: 0.0 })
   );
   wick.scale.set(1, 0.7, 1);
-  wick.position.set(-0.08, 0.34, 0.02);
-  add('wick', 'Wick', wick, { x: 0.28, y: 0.48, z: 0.42 }, { x: 120, y: 10 }, 1);
+  wick.position.set(-0.10, 0.30, 0.02);
+  add('wick', 'Wick', wick, { x: 0.95, y: 0.38, z: 0.55 }, { x: 120, y: 10 }, 1);
 
   // 22 USB-C
   const usbc = new THREE.Mesh(
@@ -551,10 +553,10 @@ function buildPulseX() {
 
   // 25 bottom cap
   const cap = new THREE.Mesh(
-    new RoundedBoxGeometry(W * 0.88, 0.08, D * 0.82, 4, 0.04),
+    new RoundedBoxGeometry(W * 0.78, 0.05, D * 0.62, 4, 0.02),
     mat({ ...purple, roughness: 0.3 })
   );
-  cap.position.set(0, -H / 2 + 0.02, 0);
+  cap.position.set(0, -H / 2 + 0.01, 0);
   add('bottomCap', 'Bottom cap', cap, { x: 0, y: -0.82, z: -0.12 }, { x: -40, y: 110 }, 2);
 
   // 26–27 screws
@@ -647,7 +649,7 @@ function initPulseX() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMappingExposure = 1.22;
   renderer.localClippingEnabled = true;
   renderer.setClearColor(0x000000, 0);
 
@@ -656,11 +658,11 @@ function initPulseX() {
 
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
   const camRig = {
-    az: 0.62,
-    el: 0.26,
-    dist: 3.55,
+    az: -0.92,
+    el: 0.30,
+    dist: 3.85,
     lookX: 0,
-    lookY: 0.08,
+    lookY: 0.04,
     lookZ: 0
   };
 
@@ -680,21 +682,21 @@ function initPulseX() {
     })
   );
   shadow.rotation.x = -Math.PI / 2;
-  shadow.position.y = -1.18;
+  shadow.position.y = -1.05;
   scene.add(shadow);
 
-  scene.add(new THREE.AmbientLight(0xb8a8d4, 0.28));
-  const key = new THREE.DirectionalLight(0xfff4e8, 2.15);
-  key.position.set(2.6, 3.4, 3.2);
+  scene.add(new THREE.AmbientLight(0xc4b4e2, 0.42));
+  const key = new THREE.DirectionalLight(0xfff6ea, 2.6);
+  key.position.set(2.8, 3.6, 3.6);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0x8aa4ff, 0.55);
-  fill.position.set(-3.2, 0.8, 1.6);
+  const fill = new THREE.DirectionalLight(0x9ab0ff, 0.7);
+  fill.position.set(-3.4, 1.0, 1.8);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xc084fc, 1.15);
-  rim.position.set(-1.2, 1.4, -3.4);
+  const rim = new THREE.DirectionalLight(0xd4a0ff, 1.45);
+  rim.position.set(-1.4, 1.6, -3.6);
   scene.add(rim);
-  const gold = new THREE.PointLight(0xd4a54a, 1.4, 8);
-  gold.position.set(1.4, 1.8, 2.2);
+  const gold = new THREE.PointLight(0xd4a54a, 1.7, 9);
+  gold.position.set(1.6, 1.9, 2.4);
   scene.add(gold);
 
   const tmp = new THREE.Vector3();
@@ -726,7 +728,10 @@ function initPulseX() {
       const t = p.userData.explodeT;
       const e = p.userData.explode;
       const h = p.userData.home;
+      const hr = p.userData.homeRot;
+      const er = p.userData.explodeRot || { x: 0, y: 0, z: 0 };
       p.position.set(h.x + e.x * t, h.y + e.y * t, h.z + e.z * t);
+      p.rotation.set(hr.x + er.x * t, hr.y + er.y * t, hr.z + er.z * t);
     });
   }
 
@@ -743,7 +748,7 @@ function initPulseX() {
   function syncLabels(w, h) {
     parts.forEach((p) => {
       const t = p.userData.explodeT;
-      const show = t > 0.42 && (!mobile || p.userData.priority >= 2);
+      const show = t > 0.55 && p.userData.priority >= 2 && (!mobile || p.userData.priority >= 2);
       const el = p.userData.labelEl;
       const line = p.userData.leader;
       if (!show) {
@@ -760,6 +765,11 @@ function initPulseX() {
       }
       const sx = (tmp.x * 0.5 + 0.5) * w;
       const sy = (-tmp.y * 0.5 + 0.5) * h;
+      if (sx < w * 0.34 && sy < h * 0.34) {
+        el.style.opacity = '0';
+        line.setAttribute('opacity', '0');
+        return;
+      }
       const nx = sx + p.userData.labelNudge.x * (mobile ? 0.7 : 1);
       const ny = sy + p.userData.labelNudge.y * (mobile ? 0.7 : 1);
       el.style.opacity = String(Math.min(1, (t - 0.42) / 0.25));
@@ -786,11 +796,11 @@ function initPulseX() {
   window.addEventListener('resize', resize);
 
   const cinema = {
-    az: 0.62,
-    el: 0.26,
-    dist: 3.55,
+    az: -0.92,
+    el: 0.30,
+    dist: 3.85,
     lookX: 0,
-    lookY: 0.08,
+    lookY: 0.04,
     lookZ: 0,
     progress: 0
   };
@@ -860,11 +870,11 @@ function initPulseX() {
     }
   });
 
-  // HOLD + ORBIT (assembled hero)
-  tl.to(cinema, { az: 1.15, el: 0.32, dist: 3.15, lookY: 0.06, duration: 0.12, ease: 'none' }, 0);
+  // HOLD + ORBIT (left-front 3/4 so GEEK BAR + purple metal read)
+  tl.to(cinema, { az: -1.28, el: 0.34, dist: 3.55, lookY: 0.02, lookX: -0.06, duration: 0.12, ease: 'none' }, 0);
 
-  // Push toward mouthpiece
-  tl.to(cinema, { az: 0.35, el: 0.48, dist: 2.15, lookX: -0.28, lookY: 0.85, lookZ: 0.05, duration: 0.07, ease: 'none' }, 0.12);
+  // Push toward mouthpiece without losing the body
+  tl.to(cinema, { az: -0.72, el: 0.42, dist: 2.85, lookX: -0.28, lookY: 0.55, lookZ: 0.08, duration: 0.07, ease: 'none' }, 0.12);
 
   const sequence = [
     ['clearTip', 0.18],
@@ -897,10 +907,10 @@ function initPulseX() {
     ['screwR', 0.568]
   ];
 
-  // Camera during sequential explode — pull back to see layers
-  tl.to(cinema, { az: 0.85, el: 0.22, dist: 3.05, lookX: 0, lookY: 0.12, lookZ: 0.15, duration: 0.10, ease: 'none' }, 0.24);
-  tl.to(cinema, { az: 0.55, el: 0.18, dist: 2.35, lookX: 0.02, lookY: 0.05, lookZ: 0.2, duration: 0.10, ease: 'none' }, 0.34);
-  tl.to(cinema, { az: 1.05, el: 0.28, dist: 2.55, lookX: -0.05, lookY: -0.05, lookZ: 0.05, duration: 0.10, ease: 'none' }, 0.44);
+  // Camera during sequential explode — pull back so plates don't eat the frame
+  tl.to(cinema, { az: -1.05, el: 0.28, dist: 4.35, lookX: 0, lookY: 0.06, lookZ: 0.1, duration: 0.10, ease: 'none' }, 0.24);
+  tl.to(cinema, { az: -0.88, el: 0.26, dist: 4.85, lookX: 0.02, lookY: 0.04, lookZ: 0.12, duration: 0.10, ease: 'none' }, 0.34);
+  tl.to(cinema, { az: 0.55, el: 0.30, dist: 5.15, lookX: 0, lookY: 0.02, lookZ: 0.08, duration: 0.10, ease: 'none' }, 0.44);
 
   sequence.forEach(([name, t0]) => {
     const obj = root.getObjectByName(name);
@@ -908,8 +918,8 @@ function initPulseX() {
     tl.to(obj.userData, { explodeT: 1, duration: 0.028, ease: 'none' }, t0);
   });
 
-  // EXPLODED HOLD — slow orbit, pulled back
-  tl.to(cinema, { az: 2.05, el: 0.42, dist: 4.55, lookX: 0, lookY: 0.05, lookZ: 0.1, duration: 0.13, ease: 'none' }, 0.58);
+  // EXPLODED HOLD — slow orbit, pulled back like a watch explode
+  tl.to(cinema, { az: 0.95, el: 0.34, dist: 5.85, lookX: 0, lookY: 0.04, lookZ: 0.08, duration: 0.13, ease: 'none' }, 0.58);
 
   // REASSEMBLE reverse
   const reverse = sequence.slice().reverse();
@@ -918,10 +928,10 @@ function initPulseX() {
     if (!obj) return;
     tl.to(obj.userData, { explodeT: 0, duration: 0.018, ease: 'none' }, 0.72 + i * 0.0055);
   });
-  tl.to(cinema, { az: 0.72, el: 0.24, dist: 3.25, lookX: 0, lookY: 0.06, lookZ: 0, duration: 0.16, ease: 'none' }, 0.72);
+  tl.to(cinema, { az: -0.88, el: 0.28, dist: 3.75, lookX: 0, lookY: 0.04, lookZ: 0, duration: 0.16, ease: 'none' }, 0.72);
 
   // SETTLE
-  tl.to(cinema, { az: 0.58, el: 0.24, dist: 3.4, lookX: 0, lookY: 0.08, lookZ: 0, duration: 0.08, ease: 'none' }, 0.92);
+  tl.to(cinema, { az: -0.92, el: 0.28, dist: 3.7, lookX: 0, lookY: 0.04, lookZ: 0, duration: 0.08, ease: 'none' }, 0.92);
 
   inView = true;
   startLoop();
