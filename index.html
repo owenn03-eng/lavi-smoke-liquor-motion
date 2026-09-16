@@ -73,7 +73,7 @@
     .tile-body { position: absolute; inset: auto 0 0 0; padding: 1.25rem; z-index: 2; }
 
     /* reveal */
-    .rv { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1); }
+    .rv { opacity: 1; transform: none; }
     .rv.in { opacity: 1; transform: none; }
     .rv-d1 { transition-delay: .12s } .rv-d2 { transition-delay: .24s } .rv-d3 { transition-delay: .36s } .rv-d4 { transition-delay: .48s }
 
@@ -155,10 +155,10 @@
       display: inline-block; border: 1px solid #D4A54A; color: #D4A54A;
       font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
       padding: .55rem 1rem; margin-top: 1.25rem;
-      transform: rotate(-2deg) scale(.92); opacity: 0;
+      transform: rotate(-2deg) scale(1); opacity: 1;
     }
     .deal-stamp.in { opacity: 1; transform: rotate(-2deg) scale(1); }
-    .mixer-beat { opacity: 0; transform: translateY(16px); }
+    .mixer-beat { opacity: 1; transform: none; }
     #deals-bg { will-change: transform, opacity; }
 
     /* stock cards motion targets */
@@ -195,7 +195,7 @@
     /* glass showcase */
     #glass { background: #0A0908; }
     .glass-stage {
-      perspective: 1100px; min-height: 420px;
+      perspective: 1100px; min-height: 280px;
       display: flex; align-items: center; justify-content: center;
     }
     .glass-orbit {
@@ -266,7 +266,7 @@
 <main id="top">
 
 <!-- ============ HERO ============ -->
-<section class="relative min-h-[100svh] flex items-end overflow-hidden">
+<section class="relative min-h-[78svh] sm:min-h-[88svh] flex items-end overflow-hidden">
   <div class="absolute inset-0 hero-media" id="hero-media">
     <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-wall.jpg" alt="The disposable wall at Lavi's Smoke Shop, Reno" class="hero-photo" id="hero-photo" />
     <div class="absolute inset-0 hero-veil"></div>
@@ -315,9 +315,9 @@
 </div>
 
 <!-- ============ WHAT WE STOCK ============ -->
-<section id="stock" class="relative py-24 sm:py-32">
+<section id="stock" class="relative py-14 sm:py-20">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="grid lg:grid-cols-12 gap-8 items-end mb-14">
+    <div class="grid lg:grid-cols-12 gap-8 items-end mb-8">
       <div class="lg:col-span-7 rv">
         <p class="eyebrow text-gold mb-5">What we stock</p>
         <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Reno's one-stop shop, <em class="text-sand">wall to wall.</em></h2>
@@ -325,7 +325,7 @@
       <p class="lg:col-span-5 text-mute leading-relaxed rv rv-d1">Mods, tanks, kits, salt-nic devices, concentrate vaporizers, CBD, beer, liquor. Classic favorites next to the latest drops. If it moved in Reno this month, it's already on our counter.</p>
     </div>
 
-    <div id="stock-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-[220px] sm:auto-rows-[260px]">
+    <div id="stock-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
       <a href="#locations" class="tile col-span-2 row-span-2 rv"><img src="https://lavi-smoke-liquor.vercel.app/img/shelf-tall.jpg" alt="Wall of disposable vapes" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-2">01 · Vape & Disposables</p><h3 class="font-display text-2xl sm:text-3xl">Every flavor, every puff count</h3><p class="text-sand/70 text-sm mt-1 hidden sm:block">Foger, Geek Bar, salt-nic kits, mods, tanks and coils. Starter to advanced.</p></div></a>
       <a href="#deals" class="tile rv rv-d1"><img src="https://lavi-smoke-liquor.vercel.app/img/kava-shots.jpg" alt="Zana Chill, Kava and Feel Free shots" loading="lazy" />
@@ -348,9 +348,9 @@
 
 
 <!-- ============ GLASS SHOWCASE ============ -->
-<section id="glass" class="relative py-24 sm:py-32 border-t hairline overflow-hidden">
+<section id="glass" class="relative py-14 sm:py-20 border-t hairline overflow-hidden">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="grid lg:grid-cols-12 gap-12 items-center">
+    <div class="grid lg:grid-cols-12 gap-8 items-center">
       <div class="lg:col-span-5 rv">
         <p class="eyebrow text-gold mb-5">Heady glass · Midtown case</p>
         <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">See it under the lights.<br/><em class="text-sand">Then take it home.</em></h2>
@@ -375,8 +375,8 @@
 <!-- ============ THE DEAL ============ -->
 <section id="deals" class="relative overflow-hidden bg-char border-y hairline">
   <img id="deals-bg" src="https://lavi-smoke-liquor.vercel.app/img/smoke-gold.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-screen pointer-events-none" />
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 sm:py-32">
-    <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
       <div class="lg:col-span-6" id="deal-818">
         <p class="eyebrow text-gold mb-5">The best deal in Reno, period.</p>
         <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[.95] tracking-tight">818 Tequila.<br/><em class="text-sand font-normal">Don't pay more<br/>somewhere else.</em></h2>
@@ -419,7 +419,7 @@
 </section>
 
 <!-- ============ WHY LAVI'S ============ -->
-<section class="py-24 sm:py-32">
+<section class="py-14 sm:py-20">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-12 gap-10">
       <div class="lg:col-span-5 rv">
@@ -431,20 +431,20 @@
         </div>
       </div>
       <ol class="lg:col-span-7 lg:pl-8 divide-y hairline">
-        <li class="py-7 grid grid-cols-[3rem_1fr] gap-5 rv"><span class="font-display italic text-3xl text-gold">01</span><div><h3 class="font-display text-2xl mb-2">Unrivaled selection</h3><p class="text-mute leading-relaxed">A vast selection of premium tobacco, vape and liquor. Classic favorites or the latest trends, there's something for your exact preference.</p></div></li>
-        <li class="py-7 grid grid-cols-[3rem_1fr] gap-5 rv rv-d1"><span class="font-display italic text-3xl text-gold">02</span><div><h3 class="font-display text-2xl mb-2">Expert guidance</h3><p class="text-mute leading-relaxed">Our team are enthusiasts who know the products. We're not here to just sell you something. We're here with insights, recommendations and straight answers.</p></div></li>
-        <li class="py-7 grid grid-cols-[3rem_1fr] gap-5 rv rv-d2"><span class="font-display italic text-3xl text-gold">03</span><div><h3 class="font-display text-2xl mb-2">Community focus</h3><p class="text-mute leading-relaxed">We're part of the Reno community. A welcoming, comfortable shop where people connect, share and learn.</p></div></li>
-        <li class="py-7 grid grid-cols-[3rem_1fr] gap-5 rv rv-d3"><span class="font-display italic text-3xl text-gold">04</span><div><h3 class="font-display text-2xl mb-2">Quality assurance</h3><p class="text-mute leading-relaxed">Sourced from reputable suppliers known for craftsmanship and consistency. Trust every product you carry out the door.</p></div></li>
-        <li class="py-7 grid grid-cols-[3rem_1fr] gap-5 rv rv-d4"><span class="font-display italic text-3xl text-gold">05</span><div><h3 class="font-display text-2xl mb-2">The lowest prices in Reno</h3><p class="text-mute leading-relaxed">Fair pricing, and a manager who works with you if something breaks or you change your mind. Ask our regulars.</p></div></li>
+        <li class="py-4 grid grid-cols-[3rem_1fr] gap-4 rv"><span class="font-display italic text-3xl text-gold">01</span><div><h3 class="font-display text-2xl mb-2">Unrivaled selection</h3><p class="text-mute leading-relaxed">A vast selection of premium tobacco, vape and liquor. Classic favorites or the latest trends, there's something for your exact preference.</p></div></li>
+        <li class="py-4 grid grid-cols-[3rem_1fr] gap-4 rv rv-d1"><span class="font-display italic text-3xl text-gold">02</span><div><h3 class="font-display text-2xl mb-2">Expert guidance</h3><p class="text-mute leading-relaxed">Our team are enthusiasts who know the products. We're not here to just sell you something. We're here with insights, recommendations and straight answers.</p></div></li>
+        <li class="py-4 grid grid-cols-[3rem_1fr] gap-4 rv rv-d2"><span class="font-display italic text-3xl text-gold">03</span><div><h3 class="font-display text-2xl mb-2">Community focus</h3><p class="text-mute leading-relaxed">We're part of the Reno community. A welcoming, comfortable shop where people connect, share and learn.</p></div></li>
+        <li class="py-4 grid grid-cols-[3rem_1fr] gap-4 rv rv-d3"><span class="font-display italic text-3xl text-gold">04</span><div><h3 class="font-display text-2xl mb-2">Quality assurance</h3><p class="text-mute leading-relaxed">Sourced from reputable suppliers known for craftsmanship and consistency. Trust every product you carry out the door.</p></div></li>
+        <li class="py-4 grid grid-cols-[3rem_1fr] gap-4 rv rv-d4"><span class="font-display italic text-3xl text-gold">05</span><div><h3 class="font-display text-2xl mb-2">The lowest prices in Reno</h3><p class="text-mute leading-relaxed">Fair pricing, and a manager who works with you if something breaks or you change your mind. Ask our regulars.</p></div></li>
       </ol>
     </div>
   </div>
 </section>
 
 <!-- ============ LOCATIONS ============ -->
-<section id="locations" class="bg-char border-y hairline py-24 sm:py-32">
+<section id="locations" class="bg-char border-y hairline py-14 sm:py-20">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="mb-14 rv">
+    <div class="mb-8 rv">
       <p class="eyebrow text-gold mb-5">Two doors in Reno</p>
       <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Come visit us <em class="text-sand">today.</em></h2>
     </div>
@@ -492,9 +492,9 @@
 </section>
 
 <!-- ============ REVIEWS ============ -->
-<section id="reviews" class="py-24 sm:py-32 relative overflow-hidden">
+<section id="reviews" class="py-14 sm:py-20 relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="flex flex-wrap items-end justify-between gap-6 mb-14 rv">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-8 rv">
       <div>
         <p class="eyebrow text-gold mb-5">Verified Google 5-star reviews</p>
         <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Read what people <em class="text-sand">are saying.</em></h2>
@@ -523,14 +523,14 @@
 <section id="inner-circle" class="relative overflow-hidden border-y hairline">
   <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-mid.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-25" loading="lazy" />
   <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 to-ink/70"></div>
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 sm:py-32 grid lg:grid-cols-12 gap-12">
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20 grid lg:grid-cols-12 gap-12">
     <div class="lg:col-span-5 rv">
       <p class="eyebrow text-gold mb-5">Join the Inner Circle</p>
       <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Your VIP reward,<br/><em class="text-sand">waiting at the counter.</em></h2>
       <p class="mt-7 text-mute leading-relaxed max-w-md">Tell us which shop you visit and what you're into. Show the reward screen to the clerk at either Lavi location to claim your discount. First to hear about new drops, restocks and weekend deals.</p>
     </div>
     <div class="lg:col-span-7 lg:pl-8 vip-stage rv rv-d2">
-      <form id="vip-form" class="vip-card vip-fallback border hairline bg-ink/80 backdrop-blur p-7 sm:p-10 relative min-h-[420px]">
+      <form id="vip-form" class="vip-card vip-fallback border hairline bg-ink/80 backdrop-blur p-7 sm:p-10 relative min-h-[320px]">
         <div class="vip-face fields">
           <div class="grid sm:grid-cols-2 gap-x-8 gap-y-2">
             <input class="field" type="text" placeholder="Full name" required />
@@ -566,7 +566,7 @@
 </section>
 
 <!-- ============ FAQ ============ -->
-<section class="py-24 sm:py-32">
+<section class="py-14 sm:py-20">
   <div class="max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-12 gap-10">
     <div class="lg:col-span-4 rv">
       <p class="eyebrow text-gold mb-5">Questions & answers</p>
@@ -587,7 +587,7 @@
 <section class="relative overflow-hidden">
   <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-tall.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30" loading="lazy" style="object-position: 50% 30%" />
   <div class="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink"></div>
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-28 sm:py-40 text-center">
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24 text-center">
     <p class="eyebrow text-gold mb-6 rv">Open till 10 every night. 11 on Fridays.</p>
     <h2 class="font-display text-5xl sm:text-7xl lg:text-8xl leading-[.95] tracking-tight rv rv-d1">Stop by <em class="text-gold">today.</em></h2>
     <p class="mt-7 text-sand/80 max-w-xl mx-auto leading-relaxed rv rv-d2">Discover the full collection in store. Find exactly what you need, or call our experts and we'll have it on the counter.</p>
@@ -641,7 +641,7 @@
   <a href="tel:+17756220682" class="py-4 text-center eyebrow bg-gold text-ink">Call McCarran</a>
 </div>
 
-<div class="watermark">Preview · Motion pass · WorkGrain</div>
+<div class="watermark">Lavi · Motion</div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -838,29 +838,22 @@
     if (isMobile) {
       stockTiles.forEach((tile) => {
         gsap.from(tile, {
-          opacity: 0,
-          y: 24,
-          duration: 0.55,
+          y: 16,
+          duration: 0.45,
           ease: 'power2.out',
-          scrollTrigger: { trigger: tile, start: 'top 88%', toggleActions: 'play none none none' }
+          scrollTrigger: { trigger: tile, start: 'top 92%', toggleActions: 'play none none none' }
         });
       });
     } else {
       stockTiles.forEach((tile) => {
         const img = tile.querySelector('img');
-        gsap.fromTo(tile,
-          { opacity: 0.55, scale: 0.96 },
-          {
-            opacity: 1, scale: 1, ease: 'none',
-            scrollTrigger: { trigger: tile, start: 'top 90%', end: 'top 45%', scrub: true }
-          }
-        );
+        // Keep tiles fully visible — only gentle image zoom (no opacity holes)
         if (img) {
           gsap.fromTo(img,
-            { scale: 1.08 },
+            { scale: 1.06 },
             {
               scale: 1, ease: 'none',
-              scrollTrigger: { trigger: tile, start: 'top 85%', end: 'top 35%', scrub: true }
+              scrollTrigger: { trigger: tile, start: 'top 90%', end: 'top 40%', scrub: true }
             }
           );
         }
@@ -886,8 +879,8 @@
   }
   if (deal818) {
     gsap.from(deal818, {
-      opacity: 0, y: 40, ease: 'none',
-      scrollTrigger: { trigger: '#deals', start: 'top 75%', end: 'top 35%', scrub: true }
+      y: 24, ease: 'none',
+      scrollTrigger: { trigger: '#deals', start: 'top 85%', end: 'top 50%', scrub: true }
     });
   }
   if (stamp) {
@@ -898,34 +891,24 @@
   }
   if (smirnoff) {
     gsap.from(smirnoff, {
-      opacity: 0, y: 36, ease: 'none',
-      scrollTrigger: { trigger: smirnoff, start: 'top 85%', end: 'top 50%', scrub: isMobile ? 0.4 : true }
+      y: 20, ease: 'none',
+      scrollTrigger: { trigger: smirnoff, start: 'top 90%', end: 'top 60%', scrub: isMobile ? 0.4 : true }
     });
   }
-  if (mixers.length) {
-    gsap.to(mixers, {
-      opacity: 1, y: 0, stagger: 0.18, ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '#mixer-beats',
-        start: 'top 80%',
-        end: isMobile ? 'top 55%' : 'top 40%',
-        scrub: isMobile ? 0.35 : true
-      }
-    });
-  }
+  // mixers stay visible — no opacity scrub that leaves blank gaps
+
 
   // —— Locations slide / stagger ——
   const locCards = gsap.utils.toArray('.loc-card');
   if (locCards.length) {
     gsap.from(locCards, {
-      opacity: 0,
-      x: (i) => (i === 0 ? -48 : 48),
-      duration: isMobile ? 0.5 : 0.85,
-      stagger: 0.15,
+      x: (i) => (i === 0 ? -28 : 28),
+      duration: isMobile ? 0.45 : 0.65,
+      stagger: 0.12,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: '#locations',
-        start: 'top 70%',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     });
@@ -933,19 +916,19 @@
 
   // —— Glass section fade ——
   const glassOrbit = document.getElementById('glass-orbit');
+  // Glass + .rv stay visible — subtle y only, never opacity:0 (was causing blank black stretches)
   if (glassOrbit) {
     gsap.from(glassOrbit, {
-      opacity: 0, y: 30, duration: 0.9, ease: 'power2.out',
-      scrollTrigger: { trigger: '#glass', start: 'top 75%', toggleActions: 'play none none none' }
+      y: 18, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: '#glass', start: 'top 85%', toggleActions: 'play none none none' }
     });
   }
 
-  // —— Remaining .rv reveals (non-scrub sections) ——
   document.querySelectorAll('.rv').forEach((el) => {
     if (el.closest('#stock-grid') || el.closest('#deals') || el.classList.contains('loc-card')) return;
     gsap.from(el, {
-      opacity: 0, y: 28, duration: 0.85, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      y: 16, duration: 0.55, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
     });
   });
 
