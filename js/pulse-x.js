@@ -13,15 +13,15 @@ const D = 0.58;
 const R = 0.26;
 
 const CHAPTERS = [
-  { at: 0.00, title: 'This is the Pulse X.', dek: 'Squat purple metal. 3D curved screen. Not a stick — the bar on the Midtown wall tonight.' },
-  { at: 0.10, title: 'Hold. Orbit.', dek: 'World’s first 3D curved screen. Constellation UI locked under glass. Keep scrolling.' },
-  { at: 0.18, title: 'Mouthpiece lifts.', dek: 'Clear tip and silicone seals peel off the airway — first cut of the teardown.' },
-  { at: 0.28, title: 'Shells split.', dek: 'Front and back housings leave the purple chassis. Same energy as a watch caseback coming off.' },
-  { at: 0.38, title: 'Metal opens.', dek: 'Left and right body halves part. Brand plate, glass, and the display module float free.' },
-  { at: 0.48, title: 'Core, microscopically.', dek: 'PCB, cell, mesh coil, wick, tank, chimney — every layer named, held in space.' },
-  { at: 0.58, title: 'Exploded. Held.', dek: 'Twenty-six pieces, open. This is the beat people remember.' },
-  { at: 0.72, title: 'It rebuilds.', dek: 'Scroll puts it back together — reverse of the explode, nothing skipped.' },
-  { at: 0.90, title: 'Snaps back. Ready.', dek: 'Assembled on the scroll. Want one tonight? Midtown or McCarran — we’ll have it on the counter.' }
+  { at: 0.00, title: 'Take one apart.', dek: 'Purple metal body, curved screen, clear tip. Scroll to see how a Geek Bar is built, layer by layer.' },
+  { at: 0.10, title: 'Hold. Orbit.', dek: 'Curved display, constellation UI under glass. Keep scrolling.' },
+  { at: 0.18, title: 'Mouthpiece lifts.', dek: 'Clear tip and silicone seals come off the airway. First cut of the teardown.' },
+  { at: 0.28, title: 'Shells split.', dek: 'Front and back housings leave the chassis, like a watch caseback coming off.' },
+  { at: 0.38, title: 'Metal opens.', dek: 'Left and right body halves part. Brand plate, glass and the display module float free.' },
+  { at: 0.48, title: 'The core.', dek: 'PCB, cell, mesh coil, wick, tank, chimney. Every layer named, held in space.' },
+  { at: 0.58, title: 'Exploded. Held.', dek: 'Twenty-six pieces, open. This is what you are holding.' },
+  { at: 0.72, title: 'It rebuilds.', dek: 'Scroll puts it back together, the reverse of the explode.' },
+  { at: 0.90, title: 'Snaps back. Ready.', dek: 'Want one? Call Midtown or McCarran and ask what is on the wall today.' }
 ];
 
 function reducedMotion() {
@@ -625,6 +625,10 @@ function initPulseX() {
 
   if (reducedMotion()) {
     showFallback('prefers-reduced-motion');
+    return;
+  }
+  if (isMobile()) {
+    showFallback('mobile');
     return;
   }
   if (!supportsImportMap() || !hasWebGL()) {

@@ -10,6 +10,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="lavi-build" content="pulse-webgl-v1" />
   <meta name="theme-color" content="#0A0908" />
+  <link rel="icon" href="data:," />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -124,7 +125,7 @@
 
     /* watermark + sticky */
     .watermark { position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 70; background: rgba(239,231,216,.92); color: #0A0908; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; pointer-events: none; white-space: nowrap; }
-    @media (max-width: 639px) { .watermark { bottom: 78px; } body { padding-bottom: 64px; } }
+    @media (max-width: 639px) { .watermark { bottom: 78px; font-size: 8px; letter-spacing: .08em; padding: 7px 10px; max-width: calc(100vw - 24px); } body { padding-bottom: 64px; } }
 
     .scroll-cue { animation: cue 2.4s ease-in-out infinite; }
     @keyframes cue { 0%,100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(8px); opacity: 1 } }
@@ -237,8 +238,8 @@
 
     /* —— Geek Bar Pulse X — WebGL film teardown —— */
     #geekbar { position: relative; background: #07060a; border-top: 1px solid rgba(239,231,216,.12); }
-    .gb-runway { position: relative; height: 1000vh; }
-    @media (max-width: 767px) { .gb-runway { height: 750vh; } }
+    .gb-runway { position: relative; height: 320vh; }
+    @media (max-width: 767px) { .gb-runway { height: auto; } }
     .gb-runway.is-static { height: auto; }
     .gb-pin {
       position: sticky; top: 0; height: 100svh;
@@ -248,7 +249,8 @@
         radial-gradient(ellipse at 72% 58%, rgba(80,40,140,.16), transparent 48%),
         #07060a;
     }
-    .gb-runway.is-static .gb-pin { position: relative; height: auto; min-height: 100svh; }
+    .gb-runway.is-static .gb-pin { position: relative; height: auto; min-height: 0; }
+    .gb-runway.is-static #gb-hud, .gb-runway.is-static #gb-canvas, .gb-runway.is-static #gb-labels, .gb-runway.is-static #gb-leaders, .gb-runway.is-static .gb-vignette { display: none !important; }
     #gb-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -304,8 +306,8 @@
     .gb-dot.on { background: #D4A54A; width: 2.5rem; }
     #gb-fallback { position: relative; z-index: 2; }
     #gb-fallback img {
-      width: min(420px, 78vw); height: auto; display: block; margin: 0 auto 1.5rem;
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,.55));
+      width: 100%; max-width: 720px; height: auto; display: block; margin: 2rem 0 0; aspect-ratio: 4/5; object-fit: cover;
+      box-shadow: 0 30px 60px rgba(0,0,0,.55);
     }
     @media (prefers-reduced-motion: reduce) {
       .gb-runway { height: auto; }
@@ -339,7 +341,6 @@
     </a>
     <nav class="hidden lg:flex items-center gap-8 eyebrow text-sand">
       <a href="#stock" class="hover:text-gold transition">What we stock</a>
-      <a href="#geekbar" class="hover:text-gold transition">Geek Bar Pulse X</a>
       <a href="#deals" class="hover:text-gold transition">Deals</a>
       <a href="#locations" class="hover:text-gold transition">Locations</a>
       <a href="#reviews" class="hover:text-gold transition">Reviews</a>
@@ -357,10 +358,10 @@
 <!-- ============ HERO ============ -->
 <section class="relative min-h-[78svh] sm:min-h-[88svh] flex items-end overflow-hidden">
   <div class="absolute inset-0 hero-media" id="hero-media">
-    <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-wall.jpg" alt="The disposable wall at Lavi's Smoke Shop, Reno" class="hero-photo" id="hero-photo" />
+    <img src="img/shelf-wall.jpg" alt="The disposable wall at Lavi's Smoke Shop, Reno" class="hero-photo" id="hero-photo" />
     <div class="absolute inset-0 hero-veil"></div>
-    <div class="smoke-layer smoke-a" id="smoke-a" style="background-image:url('https://lavi-smoke-liquor.vercel.app/img/smoke-dark.jpg')"></div>
-    <div class="smoke-layer smoke-b" id="smoke-b" style="background-image:url('https://lavi-smoke-liquor.vercel.app/img/smoke-dark.jpg')"></div>
+    <div class="smoke-layer smoke-a" id="smoke-a" style="background-image:url('img/smoke-dark.jpg')"></div>
+    <div class="smoke-layer smoke-b" id="smoke-b" style="background-image:url('img/smoke-dark.jpg')"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24 pt-32 w-full">
@@ -415,21 +416,21 @@
     </div>
 
     <div id="stock-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
-      <a href="#geekbar" class="tile col-span-2 row-span-2 rv"><img src="https://lavi-smoke-liquor.vercel.app/img/shelf-tall.jpg" alt="Wall of disposable vapes" loading="lazy" />
+      <a href="#geekbar" class="tile col-span-2 row-span-2 rv"><img src="img/shelf-tall.jpg" alt="Wall of disposable vapes" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-2">01 · Vape & Disposables</p><h3 class="font-display text-2xl sm:text-3xl">Every flavor, every puff count</h3><p class="text-sand/70 text-sm mt-1 hidden sm:block">Foger, Geek Bar, salt-nic kits, mods, tanks and coils. Starter to advanced.</p></div></a>
-      <a href="#deals" class="tile rv rv-d1"><img src="https://lavi-smoke-liquor.vercel.app/img/kava-shots.jpg" alt="Zana Chill, Kava and Feel Free shots" loading="lazy" />
+      <a href="#deals" class="tile rv rv-d1"><img src="img/kava-shots.jpg" alt="Zana Chill, Kava and Feel Free shots" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">02 · Liquor & Beer</p><h3 class="font-display text-xl">Spirits, craft beer, shots</h3></div></a>
-      <a href="#locations" class="tile rv rv-d2"><img src="https://lavi-smoke-liquor.vercel.app/img/mushroom-candy.jpg" alt="Mushroom gummies and exotic candy" loading="lazy" />
+      <a href="#locations" class="tile rv rv-d2"><img src="img/mushroom-candy.jpg" alt="Mushroom gummies and exotic candy" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">03 · Exotic Snacks</p><h3 class="font-display text-xl">Stoney, Buzzballz, the rare stuff</h3></div></a>
-      <a href="#locations" class="tile rv rv-d2"><img src="https://lavi-smoke-liquor.vercel.app/img/mini-vape-wall.jpg" alt="Display case of pens and accessories" loading="lazy" />
+      <a href="#locations" class="tile rv rv-d2"><img src="img/mini-vape-wall.jpg" alt="Display case of pens and accessories" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">04 · Glass & Accessories</p><h3 class="font-display text-xl">Heady glass, pens, papers</h3></div></a>
-      <a href="#locations" class="tile rv rv-d3"><img src="https://lavi-smoke-liquor.vercel.app/img/cbd.jpg" alt="CBD tincture and hemp" loading="lazy" />
+      <a href="#locations" class="tile rv rv-d3"><img src="img/cbd.jpg" alt="CBD tincture and hemp" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">05 · CBD</p><h3 class="font-display text-xl">Non-psychoactive, curated</h3></div></a>
-      <a href="#locations" class="tile col-span-2 rv rv-d3"><img src="https://lavi-smoke-liquor.vercel.app/img/merch-hats.jpg" alt="Lavi's branded hats on the counter" loading="lazy" style="object-position: 50% 60%" />
+      <a href="#locations" class="tile col-span-2 rv rv-d3"><img src="img/merch-hats.jpg" alt="Lavi's branded hats on the counter" loading="lazy" style="object-position: 50% 60%" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">06 · Tobacco, Cigars & Merch</p><h3 class="font-display text-xl sm:text-2xl">Premium cigars, papers, incense and Lavi's hats</h3></div></a>
-      <a href="#deals" class="tile rv rv-d4"><img src="https://lavi-smoke-liquor.vercel.app/img/space-gas.jpg" alt="Space Gas White Peach Raspberry" loading="lazy" />
+      <a href="#deals" class="tile rv rv-d4"><img src="img/space-gas.jpg" alt="Space Gas White Peach Raspberry" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">07 · New arrivals</p><h3 class="font-display text-xl">Fresh drops weekly</h3></div></a>
-      <a href="#locations" class="tile rv rv-d4"><img src="https://lavi-smoke-liquor.vercel.app/img/foger-blue.jpg" alt="Foger disposable box on the counter" loading="lazy" />
+      <a href="#locations" class="tile rv rv-d4"><img src="img/foger-blue.jpg" alt="Foger disposable box on the counter" loading="lazy" />
         <div class="tile-body"><p class="eyebrow text-gold mb-1">08 · Lowest prices</p><h3 class="font-display text-xl">Anywhere in Reno</h3></div></a>
     </div>
   </div>
@@ -447,9 +448,9 @@
       <div class="gb-vignette" aria-hidden="true"></div>
       <div id="gb-hud">
         <div class="gb-chapter">
-          <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Midtown wall</p>
-          <h2 id="gb-title" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.</h2>
-          <p id="gb-dek" class="mt-6 text-sand/80 leading-relaxed max-w-md">Squat purple metal. 3D curved screen. Not a stick — the bar on the Midtown wall tonight.</p>
+          <p class="eyebrow text-gold mb-5">Geek Bar · What's inside a disposable</p>
+          <h2 id="gb-title" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Take one apart.</h2>
+          <p id="gb-dek" class="mt-6 text-sand/80 leading-relaxed max-w-md">Purple metal body, curved screen, clear tip. Scroll to see how a Geek Bar is built, layer by layer.</p>
           <div id="gb-cta" class="mt-8 flex flex-wrap gap-3">
             <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
             <a href="#locations" class="btn btn-ghost">Both shops</a>
@@ -461,10 +462,10 @@
       </div>
       <div id="gb-fallback" hidden>
         <div class="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-          <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Midtown wall</p>
-          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.<br/><em class="text-sand">Not a blue stick.</em></h2>
-          <p class="mt-6 text-mute leading-relaxed max-w-md">Curved screen, purple metal, clear tip — on the wall at both Lavi shops tonight.</p>
-          <img src="img/geekbar-device.jpg" alt="Geek Bar Pulse X — purple metal body and 3D curved constellation screen" />
+          <p class="eyebrow text-gold mb-5">Geek Bar · On the wall</p>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Geek Bar, Foger, UT, SWFT.<br/><em class="text-sand">The whole wall.</em></h2>
+          <p class="mt-6 text-mute leading-relaxed max-w-md">Every brand and puff count that moves in Reno. Call either shop and ask what's in stock today.</p>
+          <img src="img/shelf-color.jpg" alt="Disposable vape wall at Lavi's, Reno" loading="lazy" />
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
             <a href="#locations" class="btn btn-ghost">Both shops</a>
@@ -480,9 +481,9 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-12 gap-8 items-center">
       <div class="lg:col-span-5 rv">
-        <p class="eyebrow text-gold mb-5">Heady glass · Midtown case</p>
+        <p class="eyebrow text-gold mb-5">Accessories · Midtown case</p>
         <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">See it under the lights.<br/><em class="text-sand">Then take it home.</em></h2>
-        <p class="mt-7 text-mute leading-relaxed max-w-md">The case turns over weekly — pens, papers, and pieces you won't find in a big-box aisle. Ask Ricki or Lavi what just landed. No fake cart: call Midtown and we'll hold it at the counter.</p>
+        <p class="mt-7 text-mute leading-relaxed max-w-md">Knives, pens, papers and pieces you won't find in a big-box aisle. Call Midtown and ask what's in the case right now.</p>
         <div class="mt-9 flex flex-wrap gap-3">
           <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
           <a href="#locations" class="btn btn-ghost">See it Midtown</a>
@@ -490,11 +491,11 @@
       </div>
       <div class="lg:col-span-7">
         <div class="glass-stage" id="glass-stage">
-          <div class="glass-orbit glass-auto" id="glass-orbit" role="img" aria-label="Glass and accessory case at Lavi's Midtown">
-            <img src="https://lavi-smoke-liquor.vercel.app/img/knives-case.jpg" alt="Knife and accessory display case at Lavi's" loading="lazy" />
+          <div class="glass-orbit glass-auto" id="glass-orbit" role="img" aria-label="Accessory case at Lavi's Midtown">
+            <img src="img/knives-case.jpg" alt="Knife and accessory display case at Lavi's" loading="lazy" />
           </div>
         </div>
-        <p class="mt-4 text-center eyebrow text-mute">Drag or tilt · photo fallback · Midtown floor</p>
+        <p class="mt-4 text-center eyebrow text-mute">Drag or tilt · Midtown case</p>
       </div>
     </div>
   </div>
@@ -502,7 +503,7 @@
 
 <!-- ============ THE DEAL ============ -->
 <section id="deals" class="relative overflow-hidden bg-char border-y hairline">
-  <img id="deals-bg" src="https://lavi-smoke-liquor.vercel.app/img/smoke-gold.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-screen pointer-events-none" />
+  <img id="deals-bg" src="img/smoke-gold.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-screen pointer-events-none" />
   <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
       <div class="lg:col-span-6" id="deal-818">
@@ -537,12 +538,12 @@
 <!-- ============ PHOTO STRIP ============ -->
 <section class="py-4 bg-ink">
   <div class="grid grid-cols-3 md:grid-cols-6 gap-2 px-2">
-    <div class="tile aspect-[3/4] rv"><img src="https://lavi-smoke-liquor.vercel.app/img/foger-30k.jpg" alt="Foger 30K box" loading="lazy" /></div>
-    <div class="tile aspect-[3/4] rv rv-d1"><img src="https://lavi-smoke-liquor.vercel.app/img/shelf-liquids.jpg" alt="Shelves of e-liquids and supplements" loading="lazy" /></div>
-    <div class="tile aspect-[3/4] rv rv-d2"><img src="https://lavi-smoke-liquor.vercel.app/img/knives-case.jpg" alt="Knife and accessory display case" loading="lazy" /></div>
-    <div class="tile aspect-[3/4] rv rv-d3"><img src="https://lavi-smoke-liquor.vercel.app/img/whip-it.jpg" alt="Whip-It cream chargers" loading="lazy" /></div>
-    <div class="tile aspect-[3/4] rv rv-d4"><img src="https://lavi-smoke-liquor.vercel.app/img/shelf-color.jpg" alt="Disposable vape shelf" loading="lazy" /></div>
-    <div class="tile aspect-[3/4] rv rv-d4"><img src="https://lavi-smoke-liquor.vercel.app/img/foger-bit.jpg" alt="Foger Bit 25K on the counter" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv"><img src="img/foger-30k.jpg" alt="Foger 30K box" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv rv-d1"><img src="img/shelf-liquids.jpg" alt="Shelves of e-liquids and supplements" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv rv-d2"><img src="img/knives-case.jpg" alt="Knife and accessory display case" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv rv-d3"><img src="img/whip-it.jpg" alt="Whip-It cream chargers" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv rv-d4"><img src="img/shelf-color.jpg" alt="Disposable vape shelf" loading="lazy" /></div>
+    <div class="tile aspect-[3/4] rv rv-d4"><img src="img/foger-bit.jpg" alt="Foger Bit 25K on the counter" loading="lazy" /></div>
   </div>
 </section>
 
@@ -555,7 +556,7 @@
         <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Not just another <em class="text-sand">smoke shop.</em></h2>
         <p class="mt-7 text-mute leading-relaxed">At Lavi's, we're your partner in a better vape, smoke and liquor experience. From the moment you walk through the door to when you light up at home. When you choose Lavi's, you're choosing a business that values quality, expertise and community.</p>
         <div class="mt-10 relative aspect-[4/3] overflow-hidden hidden lg:block">
-          <img src="https://lavi-smoke-liquor.vercel.app/img/candy-vapes.jpg" alt="Candy-flavored disposables" class="w-full h-full object-cover" loading="lazy" />
+          <img src="img/candy-vapes.jpg" alt="Candy-flavored disposables" class="w-full h-full object-cover" loading="lazy" />
         </div>
       </div>
       <ol class="lg:col-span-7 lg:pl-8 divide-y hairline">
@@ -580,7 +581,7 @@
     <div class="grid md:grid-cols-2 gap-5">
       <!-- Midtown -->
       <article class="loc-card border hairline bg-ink">
-        <div class="tile aspect-[16/9]"><img src="https://lavi-smoke-liquor.vercel.app/img/interior-midtown.jpg" alt="Inside Lavi's Smokeshop, Midtown Reno" loading="lazy" />
+        <div class="tile aspect-[16/9]"><img src="img/interior-midtown.jpg" alt="Inside Lavi's Smokeshop, Midtown Reno" loading="lazy" />
           <div class="tile-body"><p class="eyebrow text-gold">Location 01</p><h3 class="font-display text-3xl">Lavi's Smokeshop, Midtown</h3></div></div>
         <div class="p-7 sm:p-9">
           <p class="text-lg">743 S Virginia St<br/>Reno, NV 89501</p>
@@ -600,7 +601,7 @@
 
       <!-- Mart 2 -->
       <article class="loc-card border hairline bg-ink">
-        <div class="tile aspect-[16/9]"><img src="https://lavi-smoke-liquor.vercel.app/img/storefront-mart2.jpg" alt="Lavi's Smoke & Food Mart 2 storefront on McCarran" loading="lazy" style="object-position: 50% 45%" />
+        <div class="tile aspect-[16/9]"><img src="img/storefront-mart2.jpg" alt="Lavi's Smoke & Food Mart 2 storefront on McCarran" loading="lazy" style="object-position: 50% 45%" />
           <div class="tile-body"><p class="eyebrow text-gold">Location 02</p><h3 class="font-display text-3xl">Smoke & Food Mart 2, McCarran & Mayberry</h3></div></div>
         <div class="p-7 sm:p-9">
           <p class="text-lg">9570 S McCarran Blvd, Suite 105<br/>Reno, NV 89523</p>
@@ -649,7 +650,7 @@
 
 <!-- ============ INNER CIRCLE ============ -->
 <section id="inner-circle" class="relative overflow-hidden border-y hairline">
-  <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-mid.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-25" loading="lazy" />
+  <img src="img/shelf-mid.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-25" loading="lazy" />
   <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 to-ink/70"></div>
   <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-14 sm:py-20 grid lg:grid-cols-12 gap-12">
     <div class="lg:col-span-5 rv">
@@ -713,7 +714,7 @@
 
 <!-- ============ FINAL CTA ============ -->
 <section class="relative overflow-hidden">
-  <img src="https://lavi-smoke-liquor.vercel.app/img/shelf-tall.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30" loading="lazy" style="object-position: 50% 30%" />
+  <img src="img/shelf-tall.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30" loading="lazy" style="object-position: 50% 30%" />
   <div class="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink"></div>
   <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24 text-center">
     <p class="eyebrow text-gold mb-6 rv">Open till 10 every night. 11 on Fridays.</p>
@@ -769,12 +770,27 @@
   <a href="tel:+17756220682" class="py-4 text-center eyebrow bg-gold text-ink">Call McCarran</a>
 </div>
 
-<div class="watermark">Lavi · Motion</div>
+<div class="watermark">Preview · Rebuilt by WorkGrain · Not the live site</div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script type="module" src="js/pulse-x.js"></script>
+<script type="module">
+  (function () {
+    const runway = document.getElementById('gb-runway');
+    const desktop = window.matchMedia('(min-width: 768px)').matches;
+    const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let webgl = false;
+    try { const c = document.createElement('canvas'); webgl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) {}
+    const fallback = () => {
+      if (runway) runway.classList.add('is-static');
+      ['gb-canvas','gb-hud','gb-labels','gb-leaders'].forEach(id => { const el = document.getElementById(id); if (el) el.hidden = true; });
+      const fb = document.getElementById('gb-fallback'); if (fb) fb.hidden = false;
+      if (window.ScrollTrigger) requestAnimationFrame(() => window.ScrollTrigger.refresh());
+    };
+    if (desktop && motionOk && webgl) { import('./js/pulse-x.js').catch(fallback); } else { fallback(); }
+  })();
+</script>
 <script>
 (function () {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
