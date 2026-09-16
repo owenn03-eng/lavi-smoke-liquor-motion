@@ -8,6 +8,7 @@
   <meta property="og:title" content="Lavi's Smoke & Liquor — Two shops. One standard." />
   <meta property="og:description" content="Reno's best-stocked smoke and liquor counters. Open till 10 every night. Lowest prices in town." />
   <meta name="robots" content="noindex, nofollow" />
+  <meta name="lavi-build" content="pulse-photo-v3" />
   <meta name="theme-color" content="#0A0908" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -225,130 +226,67 @@
     }
   
 
-    /* —— Geek Bar Pulse X teardown —— */
+
+    /* —— Geek Bar Pulse X — photo explode (real product) —— */
     #geekbar { position: relative; background: #07060a; border-top: 1px solid rgba(239,231,216,.12); }
-    .gb-wrap { position: relative; height: 420vh; }
-    @media (max-width: 767px) { .gb-wrap { height: 360vh; } }
+    .gb-wrap { position: relative; height: 440vh; }
+    @media (max-width: 767px) { .gb-wrap { height: 380vh; } }
     .gb-pin {
       position: sticky; top: 0; height: 100svh;
       display: flex; align-items: center; overflow: hidden;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(120,60,200,.22), transparent 55%),
-        radial-gradient(ellipse at 70% 60%, rgba(40,180,255,.12), transparent 50%),
+        radial-gradient(ellipse at 35% 45%, rgba(120,60,200,.28), transparent 55%),
+        radial-gradient(ellipse at 70% 55%, rgba(40,180,255,.1), transparent 50%),
         #07060a;
     }
     .gb-inner {
       width: 100%; max-width: 80rem; margin: 0 auto;
-      padding: 5rem 1.25rem 1.5rem;
-      display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: center;
+      padding: 4.5rem 1.25rem 1.25rem;
+      display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: center;
     }
     @media (min-width: 1024px) {
-      .gb-inner { grid-template-columns: 1.15fr .85fr; gap: 2.5rem; padding-left: 2rem; padding-right: 2rem; }
+      .gb-inner { grid-template-columns: 1.2fr .8fr; gap: 2rem; padding-left: 2rem; padding-right: 2rem; }
     }
     .gb-stage {
-      position: relative; height: min(62vh, 560px);
+      position: relative;
+      height: min(68vh, 620px);
       display: flex; align-items: center; justify-content: center;
-      perspective: 1600px;
     }
-    .gb-rig {
-      position: relative; width: min(280px, 68vw); height: min(420px, 78%);
+    .gb-stack {
+      position: relative;
+      width: min(320px, 78vw);
+      aspect-ratio: 9 / 16;
       transform-style: preserve-3d;
-      transform: rotateY(-22deg) rotateX(10deg);
+      transform: rotateY(-16deg) rotateX(6deg);
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.65));
     }
-    .gb-layer {
+    .gb-slice {
       position: absolute; inset: 0;
-      will-change: transform, opacity, filter;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-    }
-    .gb-clear {
-      z-index: 6;
-      border-radius: 2.2rem;
-      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 40%, rgba(180,140,255,.08));
-      border: 1px solid rgba(255,255,255,.28);
-      box-shadow: inset 0 0 40px rgba(255,255,255,.08), 0 30px 60px rgba(0,0,0,.45);
-    }
-    .gb-body {
-      z-index: 4; inset: 4% 5% 6% 5%;
-      border-radius: 1.85rem;
-      background:
-        linear-gradient(160deg, rgba(255,255,255,.35), transparent 35%),
-        linear-gradient(180deg, #d4a0ff 0%, #7b3fd4 40%, #4a1f9a 100%);
-      box-shadow: 0 18px 40px rgba(80,30,160,.45);
-    }
-    .gb-screen {
-      z-index: 5; inset: 10% 12% 18% 28%;
-      border-radius: 1.4rem 1.1rem 1.1rem 1.4rem;
-      background:
-        radial-gradient(circle at 55% 42%, rgba(255,220,80,.9) 0 2px, transparent 3px),
-        radial-gradient(circle at 42% 55%, rgba(255,220,80,.7) 0 1.5px, transparent 2.5px),
-        radial-gradient(circle at 62% 58%, rgba(255,220,80,.7) 0 1.5px, transparent 2.5px),
-        linear-gradient(145deg, #1a1528 0%, #0a0814 55%, #14102a 100%);
-      border: 1px solid rgba(180,140,255,.35);
-      box-shadow: inset 0 0 30px rgba(120,80,255,.25), 0 0 24px rgba(100,60,220,.35);
+      will-change: transform, filter;
       overflow: hidden;
+      border-radius: 1.25rem;
     }
-    .gb-screen::before {
-      content: ''; position: absolute; inset: 18% 20% 28% 20%;
-      border: 1px solid rgba(255,220,80,.45);
-      border-radius: 50%;
-      box-shadow: 0 0 20px rgba(255,220,80,.25);
-      background:
-        radial-gradient(circle at 50% 50%, rgba(100,200,255,.5) 0 8%, transparent 9%);
-      opacity: .9;
+    .gb-slice img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 50% 40%;
+      display: block;
+      pointer-events: none;
+      user-select: none;
     }
-    .gb-screen::after {
-      content: '100   100'; position: absolute; left: 12%; right: 12%; bottom: 10%;
-      font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .2em;
-      color: rgba(180,220,255,.85); text-align: center;
-    }
-    .gb-brand {
-      z-index: 5; left: 8%; top: 22%; bottom: 28%; width: 18%;
-      display: flex; align-items: center; justify-content: center;
-      writing-mode: vertical-rl; transform: rotate(180deg);
-      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 13px;
-      letter-spacing: .28em; color: rgba(10,9,8,.88);
-    }
-    .gb-mouth {
-      z-index: 7; inset: auto 28% -2% 28%; height: 12%;
-      border-radius: 0 0 1.2rem 1.2rem;
-      background: linear-gradient(180deg, rgba(220,240,255,.55), rgba(180,200,220,.25));
-      border: 1px solid rgba(255,255,255,.4);
-      border-top: 0;
-    }
-    .gb-core {
-      z-index: 3; inset: 22% 22% 24% 22%;
-      border-radius: 1rem;
-      background: linear-gradient(180deg, #2a2a32, #0e0e12);
-      border: 1px solid rgba(212,165,74,.35);
-    }
-    .gb-core::before {
-      content: ''; position: absolute; inset: 20% 15%;
-      background: repeating-linear-gradient(90deg, #D4A54A 0 2px, transparent 2px 7px);
-      opacity: .45; border-radius: 4px;
-    }
-    .gb-coil {
-      z-index: 3; inset: 30% 32% 42% 32%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(212,165,74,.95), rgba(212,165,74,.2) 50%, transparent 70%),
-        repeating-conic-gradient(from 0deg, rgba(239,231,216,.4) 0 6deg, transparent 6deg 12deg);
-      filter: drop-shadow(0 0 14px rgba(212,165,74,.5));
-    }
-    .gb-photo {
-      position: absolute; right: 2%; bottom: 4%; width: min(42%, 200px);
-      border: 1px solid rgba(239,231,216,.18);
-      box-shadow: 0 20px 50px rgba(0,0,0,.55);
-      border-radius: 8px; overflow: hidden; opacity: .95;
-      z-index: 8;
-    }
-    .gb-photo img { display: block; width: 100%; height: auto; }
-    .gb-copy { position: relative; min-height: 240px; }
+    /* slices of the SAME photo — peel like a teardown */
+    .gb-s-mouth { clip-path: inset(0 0 82% 0); z-index: 5; }
+    .gb-s-shell { clip-path: inset(12% 48% 8% 0); z-index: 4; }
+    .gb-s-screen { clip-path: inset(12% 0 8% 42%); z-index: 4; }
+    .gb-s-core { clip-path: inset(38% 28% 28% 28%); z-index: 3; border-radius: .75rem; }
+    .gb-s-base { clip-path: inset(0); z-index: 1; opacity: .35; filter: blur(8px) saturate(1.1); transform: scale(1.06); }
+    .gb-copy { position: relative; min-height: 250px; }
     .gb-step {
       position: absolute; inset: 0;
-      opacity: 0; transform: translateY(14px);
+      opacity: 0; transform: translateY(12px);
       pointer-events: none;
-      transition: opacity .4s ease, transform .4s ease;
+      transition: opacity .35s ease, transform .35s ease;
     }
     .gb-step.is-on { opacity: 1; transform: none; pointer-events: auto; }
     .gb-progress { display: flex; gap: .45rem; margin-top: 1.5rem; flex-wrap: wrap; }
@@ -486,42 +424,37 @@
   <div class="gb-wrap" id="gb-wrap">
     <div class="gb-pin">
       <div class="gb-inner">
-        <div class="gb-stage" id="gb-stage">
-          <div class="gb-rig" id="gb-rig">
-            <div class="gb-layer gb-core" id="gb-core" aria-hidden="true"></div>
-            <div class="gb-layer gb-coil" id="gb-coil" aria-hidden="true"></div>
-            <div class="gb-layer gb-body" id="gb-body" aria-hidden="true"></div>
-            <div class="gb-layer gb-screen" id="gb-screen" aria-hidden="true"></div>
-            <div class="gb-layer gb-brand" id="gb-brand" aria-hidden="true">GEEK BAR</div>
-            <div class="gb-layer gb-clear" id="gb-clear" aria-hidden="true"></div>
-            <div class="gb-layer gb-mouth" id="gb-mouth" aria-hidden="true"></div>
+        <div class="gb-stage">
+          <div class="gb-stack" id="gb-stack">
+            <div class="gb-slice gb-s-base" aria-hidden="true"><img src="img/geekbar-device.jpg" alt="" /></div>
+            <div class="gb-slice gb-s-core" id="gb-core"><img src="img/geekbar-device.jpg" alt="" /></div>
+            <div class="gb-slice gb-s-shell" id="gb-shell"><img src="img/geekbar-device.jpg" alt="" /></div>
+            <div class="gb-slice gb-s-screen" id="gb-screen"><img src="img/geekbar-device.jpg" alt="" /></div>
+            <div class="gb-slice gb-s-mouth" id="gb-mouth"><img src="img/geekbar-device.jpg" alt="" /></div>
           </div>
-          <figure class="gb-photo">
-            <img src="img/geekbar-pulse-x.jpg" alt="Geek Bar Pulse X — 3D curved screen disposable" />
-          </figure>
         </div>
         <div class="gb-copy">
-          <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Product cinema</p>
+          <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Midtown wall</p>
           <div class="gb-steps" id="gb-steps">
             <div class="gb-step is-on" data-step="0">
-              <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">Geek Bar Pulse X.<br/><em class="text-sand">Hold. Explode. Rebuild.</em></h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">The curved-screen disposable on Midtown's wall. Scroll — it locks in place, peels apart like a watch teardown, then snaps back together before the page moves on.</p>
+              <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.<br/><em class="text-sand">Not a blue stick.</em></h2>
+              <p class="mt-6 text-mute leading-relaxed max-w-md">Your Geek Bar — curved screen, clear tip, real product photo. Scroll and it locks, peels apart, then snaps back before the next section.</p>
             </div>
             <div class="gb-step" data-step="1">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Clear shell lifts</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">That glassy outer body is the Pulse X look — encapsulated color, premium plastic, not a skinny stick.</p>
+              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Mouthpiece lifts</h2>
+              <p class="mt-6 text-mute leading-relaxed max-w-md">Clear tip peels up off the chassis — first beat of the teardown.</p>
             </div>
             <div class="gb-step" data-step="2">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">3D curved screen</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Constellation UI, battery + juice readouts. The screen peels off the chassis so you see why people stop at the wall.</p>
+              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Shell · screen split</h2>
+              <p class="mt-6 text-mute leading-relaxed max-w-md">Body and curved-screen face pull apart so you can read the constellation UI — same energy as a watch explode.</p>
             </div>
             <div class="gb-step" data-step="3">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Core · coil · power</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Inside: mesh, juice path, battery. Same story as a luxury watch explode — except this one's on Lavi's shelf tonight.</p>
+              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Core exposed</h2>
+              <p class="mt-6 text-mute leading-relaxed max-w-md">Hold it open. This is the beat people remember — then we put it back together.</p>
             </div>
             <div class="gb-step" data-step="4">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Back together.</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Reassembled. Ready for the counter. Call Midtown or McCarran and we'll put a Pulse X (or whatever's hot this week) in your hand.</p>
+              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Snaps back. Ready.</h2>
+              <p class="mt-6 text-mute leading-relaxed max-w-md">Reassembled on the scroll. Want one tonight? Midtown or McCarran — we'll have it on the counter.</p>
               <div class="mt-8 flex flex-wrap gap-3">
                 <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
                 <a href="#locations" class="btn btn-ghost">Both shops</a>
@@ -1124,20 +1057,18 @@
 
 
 
-  // —— Geek Bar Pulse X: hold → explode → hold open → reassemble → settle ——
+
+  // —— Geek Bar Pulse X PHOTO explode: hold → expand → hold → rebuild ——
   const gbWrap = document.getElementById('gb-wrap');
   if (gbWrap && !reduceMotion) {
-    const rig = document.getElementById('gb-rig');
-    const clear = document.getElementById('gb-clear');
-    const body = document.getElementById('gb-body');
-    const screen = document.getElementById('gb-screen');
-    const brand = document.getElementById('gb-brand');
+    const stack = document.getElementById('gb-stack');
     const mouth = document.getElementById('gb-mouth');
+    const shell = document.getElementById('gb-shell');
+    const screen = document.getElementById('gb-screen');
     const core = document.getElementById('gb-core');
-    const coil = document.getElementById('gb-coil');
     const steps = gsap.utils.toArray('#gb-steps .gb-step');
     const dots = gsap.utils.toArray('#gb-progress .gb-dot');
-    const dx = isMobile ? 1 : 1.35;
+    const dx = isMobile ? 1 : 1.25;
 
     const setStep = (i) => {
       steps.forEach((el, idx) => el.classList.toggle('is-on', idx === i));
@@ -1149,13 +1080,13 @@
         trigger: gbWrap,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.9,
+        scrub: 1,
         anticipatePin: 1,
         onUpdate: (self) => {
           const p = self.progress;
           let i = 0;
-          if (p >= 0.16) i = 1;
-          if (p >= 0.32) i = 2;
+          if (p >= 0.14) i = 1;
+          if (p >= 0.30) i = 2;
           if (p >= 0.48) i = 3;
           if (p >= 0.72) i = 4;
           setStep(i);
@@ -1163,31 +1094,27 @@
       }
     });
 
-    // HOLD assembled longer
-    tl.to(rig, { rotateY: -24, rotateX: 11, duration: 0.18, ease: 'none' }, 0);
+    // HOLD on the real photo
+    tl.to(stack, { rotateY: -18, rotateX: 7, duration: 0.16, ease: 'none' }, 0);
 
-    // EXPLODE out
-    tl.to(clear, { x: -70 * dx, y: -24, z: 50, rotateY: -12, duration: 0.3, ease: 'none' }, 0.18)
-      .to(mouth, { y: 70 * dx, z: 20, duration: 0.28, ease: 'none' }, 0.2)
-      .to(screen, { x: 75 * dx, y: -18, z: 60, rotateY: 18, duration: 0.3, ease: 'none' }, 0.22)
-      .to(brand, { x: -40 * dx, opacity: 0.85, duration: 0.25, ease: 'none' }, 0.24)
-      .to(body, { x: -20 * dx, y: 12, z: -10, duration: 0.28, ease: 'none' }, 0.26)
-      .to(coil, { x: 55 * dx, y: -40, scale: 1.2, duration: 0.28, ease: 'none' }, 0.28)
-      .to(core, { y: 55 * dx, z: -20, duration: 0.28, ease: 'none' }, 0.3)
-      .to(rig, { rotateY: -32, rotateX: 14, duration: 0.3, ease: 'none' }, 0.18);
+    // EXPLODE — photo slices peel apart
+    tl.to(mouth, { y: -70 * dx, z: 30, duration: 0.28, ease: 'none' }, 0.16)
+      .to(shell, { x: -85 * dx, y: 10, z: 40, duration: 0.32, ease: 'none' }, 0.2)
+      .to(screen, { x: 90 * dx, y: -8, z: 50, duration: 0.32, ease: 'none' }, 0.22)
+      .to(core, { scale: 1.08, z: 20, duration: 0.28, ease: 'none' }, 0.26)
+      .to(stack, { rotateY: -28, rotateX: 10, duration: 0.32, ease: 'none' }, 0.16);
 
-    // HOLD exploded
-    tl.to(rig, { rotateY: -34, duration: 0.14, ease: 'none' }, 0.48);
+    // HOLD OPEN so you can see it
+    tl.to(stack, { rotateY: -30, duration: 0.16, ease: 'none' }, 0.48);
 
-    // COME BACK IN
-    tl.to([clear, mouth, screen, brand, body, coil, core], {
-        x: 0, y: 0, z: 0, rotateY: 0, scale: 1, opacity: 1,
-        duration: 0.26, ease: 'none'
-      }, 0.62)
-      .to(rig, { rotateY: -20, rotateX: 9, duration: 0.26, ease: 'none' }, 0.62);
+    // REBUILD — come back in
+    tl.to([mouth, shell, screen, core], {
+        x: 0, y: 0, z: 0, scale: 1, duration: 0.28, ease: 'none'
+      }, 0.64)
+      .to(stack, { rotateY: -16, rotateX: 6, duration: 0.28, ease: 'none' }, 0.64);
 
     // Settle before next section
-    tl.to(rig, { rotateY: -18, rotateX: 8, duration: 0.12, ease: 'none' }, 0.88);
+    tl.to(stack, { rotateY: -14, rotateX: 5, duration: 0.12, ease: 'none' }, 0.92);
   } else if (gbWrap && reduceMotion) {
     document.querySelectorAll('#gb-steps .gb-step').forEach((el, i) => el.classList.toggle('is-on', i === 0));
   }
