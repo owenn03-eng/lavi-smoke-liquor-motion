@@ -16,6 +16,7 @@ Premium scroll-driven redesign proof for Lavi's Smoke & Liquor (Reno, Midtown + 
 - Lenis smooth scroll
 - GSAP + ScrollTrigger
 - CSS 3D glass showcase
+- Three.js (CDN) Geek Bar Pulse X scroll teardown on `#geekbar`
 - Images loaded from the static redesign CDN (`lavi-smoke-liquor.vercel.app/img/…`)
 
 ## Docs

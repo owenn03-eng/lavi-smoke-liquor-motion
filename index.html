@@ -8,13 +8,21 @@
   <meta property="og:title" content="Lavi's Smoke & Liquor — Two shops. One standard." />
   <meta property="og:description" content="Reno's best-stocked smoke and liquor counters. Open till 10 every night. Lowest prices in town." />
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="lavi-build" content="pulse-photo-v3" />
+  <meta name="lavi-build" content="pulse-webgl-v1" />
   <meta name="theme-color" content="#0A0908" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Manrope:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" />
 
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -227,71 +235,81 @@
   
 
 
-    /* —— Geek Bar Pulse X — photo explode (real product) —— */
+    /* —— Geek Bar Pulse X — WebGL film teardown —— */
     #geekbar { position: relative; background: #07060a; border-top: 1px solid rgba(239,231,216,.12); }
-    .gb-wrap { position: relative; height: 440vh; }
-    @media (max-width: 767px) { .gb-wrap { height: 380vh; } }
+    .gb-runway { position: relative; height: 1000vh; }
+    @media (max-width: 767px) { .gb-runway { height: 750vh; } }
+    .gb-runway.is-static { height: auto; }
     .gb-pin {
       position: sticky; top: 0; height: 100svh;
-      display: flex; align-items: center; overflow: hidden;
+      overflow: hidden;
       background:
-        radial-gradient(ellipse at 35% 45%, rgba(120,60,200,.28), transparent 55%),
-        radial-gradient(ellipse at 70% 55%, rgba(40,180,255,.1), transparent 50%),
+        radial-gradient(ellipse at 32% 42%, rgba(140,70,210,.32), transparent 52%),
+        radial-gradient(ellipse at 72% 58%, rgba(80,40,140,.16), transparent 48%),
         #07060a;
     }
-    .gb-inner {
-      width: 100%; max-width: 80rem; margin: 0 auto;
-      padding: 4.5rem 1.25rem 1.25rem;
-      display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: center;
-    }
-    @media (min-width: 1024px) {
-      .gb-inner { grid-template-columns: 1.2fr .8fr; gap: 2rem; padding-left: 2rem; padding-right: 2rem; }
-    }
-    .gb-stage {
-      position: relative;
-      height: min(68vh, 620px);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .gb-stack {
-      position: relative;
-      width: min(320px, 78vw);
-      aspect-ratio: 9 / 16;
-      transform-style: preserve-3d;
-      transform: rotateY(-16deg) rotateX(6deg);
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,.65));
-    }
-    .gb-slice {
-      position: absolute; inset: 0;
-      will-change: transform, filter;
-      overflow: hidden;
-      border-radius: 1.25rem;
-    }
-    .gb-slice img {
+    .gb-runway.is-static .gb-pin { position: relative; height: auto; min-height: 100svh; }
+    #gb-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: 50% 40%;
       display: block;
       pointer-events: none;
-      user-select: none;
     }
-    /* slices of the SAME photo — peel like a teardown */
-    .gb-s-mouth { clip-path: inset(0 0 82% 0); z-index: 5; }
-    .gb-s-shell { clip-path: inset(12% 48% 8% 0); z-index: 4; }
-    .gb-s-screen { clip-path: inset(12% 0 8% 42%); z-index: 4; }
-    .gb-s-core { clip-path: inset(38% 28% 28% 28%); z-index: 3; border-radius: .75rem; }
-    .gb-s-base { clip-path: inset(0); z-index: 1; opacity: .35; filter: blur(8px) saturate(1.1); transform: scale(1.06); }
-    .gb-copy { position: relative; min-height: 250px; }
-    .gb-step {
+    .gb-vignette {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(7,6,10,.55) 0%, transparent 22%, transparent 72%, rgba(7,6,10,.7) 100%),
+        linear-gradient(90deg, rgba(7,6,10,.35) 0%, transparent 28%, transparent 72%, rgba(7,6,10,.28) 100%);
+    }
+    #gb-leaders {
       position: absolute; inset: 0;
-      opacity: 0; transform: translateY(12px);
+      width: 100%; height: 100%;
       pointer-events: none;
-      transition: opacity .35s ease, transform .35s ease;
+      overflow: visible;
     }
-    .gb-step.is-on { opacity: 1; transform: none; pointer-events: auto; }
-    .gb-progress { display: flex; gap: .45rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    #gb-labels { position: absolute; inset: 0; pointer-events: none; }
+    .gb-label {
+      position: absolute; top: 0; left: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+      color: #EFE7D8;
+      white-space: nowrap;
+      opacity: 0;
+      will-change: transform, opacity;
+      transform: translate(-999px,-999px);
+    }
+    .gb-label span {
+      display: inline-block;
+      padding: .35rem .55rem;
+      border: 1px solid rgba(212,165,74,.35);
+      background: rgba(7,6,10,.55);
+      backdrop-filter: blur(8px);
+    }
+    #gb-hud {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 5.5rem 1.25rem 1.5rem;
+      pointer-events: none;
+      z-index: 3;
+    }
+    @media (min-width: 768px) {
+      #gb-hud { padding: 6.5rem 2.5rem 2rem; }
+    }
+    .gb-chapter { max-width: 34rem; pointer-events: none; }
+    .gb-chapter h2 { text-shadow: 0 12px 40px rgba(7,6,10,.55); }
+    #gb-cta { display: none; pointer-events: auto; }
+    #gb-cta.is-on { display: flex; }
+    .gb-progress { display: flex; gap: .45rem; flex-wrap: wrap; pointer-events: none; }
     .gb-dot { width: 1.75rem; height: 2px; background: rgba(239,231,216,.2); transition: background .3s, width .3s; }
     .gb-dot.on { background: #D4A54A; width: 2.5rem; }
+    #gb-fallback { position: relative; z-index: 2; }
+    #gb-fallback img {
+      width: min(420px, 78vw); height: auto; display: block; margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.55));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gb-runway { height: auto; }
+    }
 
 </style>
 </head>
@@ -421,48 +439,35 @@
 
 <!-- ============ GEEK BAR TEARDOWN ============ -->
 <section id="geekbar" aria-label="Geek Bar Pulse X product teardown">
-  <div class="gb-wrap" id="gb-wrap">
+  <div class="gb-runway" id="gb-runway">
     <div class="gb-pin">
-      <div class="gb-inner">
-        <div class="gb-stage">
-          <div class="gb-stack" id="gb-stack">
-            <div class="gb-slice gb-s-base" aria-hidden="true"><img src="img/geekbar-device.jpg" alt="" /></div>
-            <div class="gb-slice gb-s-core" id="gb-core"><img src="img/geekbar-device.jpg" alt="" /></div>
-            <div class="gb-slice gb-s-shell" id="gb-shell"><img src="img/geekbar-device.jpg" alt="" /></div>
-            <div class="gb-slice gb-s-screen" id="gb-screen"><img src="img/geekbar-device.jpg" alt="" /></div>
-            <div class="gb-slice gb-s-mouth" id="gb-mouth"><img src="img/geekbar-device.jpg" alt="" /></div>
+      <canvas id="gb-canvas" aria-hidden="true"></canvas>
+      <svg id="gb-leaders" aria-hidden="true"></svg>
+      <div id="gb-labels" aria-hidden="true"></div>
+      <div class="gb-vignette" aria-hidden="true"></div>
+      <div id="gb-hud">
+        <div class="gb-chapter">
+          <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Midtown wall</p>
+          <h2 id="gb-title" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.</h2>
+          <p id="gb-dek" class="mt-6 text-sand/80 leading-relaxed max-w-md">Squat purple metal. 3D curved screen. Not a stick — the bar on the Midtown wall tonight.</p>
+          <div id="gb-cta" class="mt-8 flex flex-wrap gap-3">
+            <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
+            <a href="#locations" class="btn btn-ghost">Both shops</a>
           </div>
         </div>
-        <div class="gb-copy">
+        <div class="gb-progress" id="gb-progress" aria-hidden="true">
+          <span class="gb-dot on"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span>
+        </div>
+      </div>
+      <div id="gb-fallback" hidden>
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
           <p class="eyebrow text-gold mb-5">Geek Bar Pulse X · Midtown wall</p>
-          <div class="gb-steps" id="gb-steps">
-            <div class="gb-step is-on" data-step="0">
-              <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.<br/><em class="text-sand">Not a blue stick.</em></h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Your Geek Bar — curved screen, clear tip, real product photo. Scroll and it locks, peels apart, then snaps back before the next section.</p>
-            </div>
-            <div class="gb-step" data-step="1">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Mouthpiece lifts</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Clear tip peels up off the chassis — first beat of the teardown.</p>
-            </div>
-            <div class="gb-step" data-step="2">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Shell · screen split</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Body and curved-screen face pull apart so you can read the constellation UI — same energy as a watch explode.</p>
-            </div>
-            <div class="gb-step" data-step="3">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Core exposed</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Hold it open. This is the beat people remember — then we put it back together.</p>
-            </div>
-            <div class="gb-step" data-step="4">
-              <h2 class="font-display text-4xl sm:text-5xl leading-[1] tracking-tight">Snaps back. Ready.</h2>
-              <p class="mt-6 text-mute leading-relaxed max-w-md">Reassembled on the scroll. Want one tonight? Midtown or McCarran — we'll have it on the counter.</p>
-              <div class="mt-8 flex flex-wrap gap-3">
-                <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
-                <a href="#locations" class="btn btn-ghost">Both shops</a>
-              </div>
-            </div>
-          </div>
-          <div class="gb-progress" id="gb-progress" aria-hidden="true">
-            <span class="gb-dot on"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1] tracking-tight">This is the Pulse X.<br/><em class="text-sand">Not a blue stick.</em></h2>
+          <p class="mt-6 text-mute leading-relaxed max-w-md">Curved screen, purple metal, clear tip — on the wall at both Lavi shops tonight.</p>
+          <img src="img/geekbar-device.jpg" alt="Geek Bar Pulse X — purple metal body and 3D curved constellation screen" />
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="tel:+17757860613" class="btn btn-gold">Call Midtown</a>
+            <a href="#locations" class="btn btn-ghost">Both shops</a>
           </div>
         </div>
       </div>
@@ -769,6 +774,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script type="module" src="js/pulse-x.js"></script>
 <script>
 (function () {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1058,66 +1064,7 @@
 
 
 
-  // —— Geek Bar Pulse X PHOTO explode: hold → expand → hold → rebuild ——
-  const gbWrap = document.getElementById('gb-wrap');
-  if (gbWrap && !reduceMotion) {
-    const stack = document.getElementById('gb-stack');
-    const mouth = document.getElementById('gb-mouth');
-    const shell = document.getElementById('gb-shell');
-    const screen = document.getElementById('gb-screen');
-    const core = document.getElementById('gb-core');
-    const steps = gsap.utils.toArray('#gb-steps .gb-step');
-    const dots = gsap.utils.toArray('#gb-progress .gb-dot');
-    const dx = isMobile ? 1 : 1.25;
-
-    const setStep = (i) => {
-      steps.forEach((el, idx) => el.classList.toggle('is-on', idx === i));
-      dots.forEach((el, idx) => el.classList.toggle('on', idx === i));
-    };
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: gbWrap,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1,
-        anticipatePin: 1,
-        onUpdate: (self) => {
-          const p = self.progress;
-          let i = 0;
-          if (p >= 0.14) i = 1;
-          if (p >= 0.30) i = 2;
-          if (p >= 0.48) i = 3;
-          if (p >= 0.72) i = 4;
-          setStep(i);
-        }
-      }
-    });
-
-    // HOLD on the real photo
-    tl.to(stack, { rotateY: -18, rotateX: 7, duration: 0.16, ease: 'none' }, 0);
-
-    // EXPLODE — photo slices peel apart
-    tl.to(mouth, { y: -70 * dx, z: 30, duration: 0.28, ease: 'none' }, 0.16)
-      .to(shell, { x: -85 * dx, y: 10, z: 40, duration: 0.32, ease: 'none' }, 0.2)
-      .to(screen, { x: 90 * dx, y: -8, z: 50, duration: 0.32, ease: 'none' }, 0.22)
-      .to(core, { scale: 1.08, z: 20, duration: 0.28, ease: 'none' }, 0.26)
-      .to(stack, { rotateY: -28, rotateX: 10, duration: 0.32, ease: 'none' }, 0.16);
-
-    // HOLD OPEN so you can see it
-    tl.to(stack, { rotateY: -30, duration: 0.16, ease: 'none' }, 0.48);
-
-    // REBUILD — come back in
-    tl.to([mouth, shell, screen, core], {
-        x: 0, y: 0, z: 0, scale: 1, duration: 0.28, ease: 'none'
-      }, 0.64)
-      .to(stack, { rotateY: -16, rotateX: 6, duration: 0.28, ease: 'none' }, 0.64);
-
-    // Settle before next section
-    tl.to(stack, { rotateY: -14, rotateX: 5, duration: 0.12, ease: 'none' }, 0.92);
-  } else if (gbWrap && reduceMotion) {
-    document.querySelectorAll('#gb-steps .gb-step').forEach((el, i) => el.classList.toggle('is-on', i === 0));
-  }
+  // Geek Bar cinema lives in js/pulse-x.js (Three.js + this page's Lenis/ScrollTrigger)
 
   // Keep ScrollTrigger in sync after load
   ScrollTrigger.refresh();
