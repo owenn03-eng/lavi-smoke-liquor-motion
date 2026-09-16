@@ -36,6 +36,12 @@ so a Vercel HTML-only deploy still loads photos. Local `img/` kept as reference.
 - CTAs: **Call Midtown** / **See it Midtown** (no cart).
 - No Three.js / WebGL — CSS-only for mobile reliability; photo is the mandatory fallback.
 
+## Phase 4 — Pulse X WebGL film teardown (`pulse-webgl-v1`)
+
+- Replaced the short photo `clip-path` peel (`#geekbar`) with a **Three.js CDN** procedural Pulse X: squat purple-metal body, curved constellation screen, 26–28 named meshes (tip, seals, shells, chassis halves, glass + module, constellation, brand plate, PCB, cell, coil/mesh/wick/tank/chimney, USB-C, LEDs, cap, screws).
+- Sticky full-viewport canvas on a **1000vh / 750vh** runway. GSAP ScrollTrigger scrub: hold/orbit → sequential explode with labels → exploded hold → reverse reassemble → settle. Syncs with the page Lenis ticker.
+- `prefers-reduced-motion` and missing-WebGL fall back to the real product photo. Old CSS-stick / slice-peel code removed. Rest of the Lavi page unchanged.
+
 ## Unchanged (intentional)
 
 - Section IDs: `#top` `#stock` `#deals` `#locations` `#reviews` `#inner-circle`.
